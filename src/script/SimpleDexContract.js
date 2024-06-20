@@ -20,20 +20,20 @@ class SimpleDexContract extends BaseContract {
 
   async createPair() {
     const simpleDexContract = await this.createContract()
-    console.log(simpleDexContract)
-    console.log('11')
-    const createdPair = await simpleDexContract.addLiquidity(
-      config.ducTokenAddress,
-      config.hieuTokenAddress, 
-      500000,
-      250000,
-      config.metamaskAddress, 
+      const tokenA = config.ducTokenAddress
+      const tokenB = config.hieuTokenAddress
+      const amountADesired = ethers.toBigInt(500000) 
+      const amountBDesired = ethers.toBigInt(250000)
+      const to = config.metamaskAddress
+
+    const tx = await simpleDexContract.addLiquidity(
+      tokenA,
+      tokenB,
+      amountADesired,
+      amountBDesired,
+      to
     )
-    console.log(createdPair)
-    
-    console.log('createdPair')
   }
 }
-const test = SimpleDexContract.create()
-test.createPair()
-//module.exports = LiquidityTokenContract
+
+module.exports = SimpleDexContract
