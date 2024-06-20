@@ -1,21 +1,26 @@
 'use strict'
 
-const { ethers } = require('ethers')
-const config = require('./configs/config.js')
-const { NETWORK } = require('./utils/constant.js')
+const Wallet = require('./Wallet.js')
 
 class BaseContract {
-  createProvider () {
-    return ethers.getDefaultProvider(NETWORK , {
-      alchemy: config.alchemyApiKey,
-    });
+  constructor({
+    wallet,
+  }) {
+    this.wallet = wallet
   }
 
+  static create({
+    wallet = Wallet.create()
+  } = {}) {
+    return new this({ wallet }) 
+  }  
+  
+  
   generateContractABI() {
     throw new Error('need to be inherited')
   }
 
-  createContract () {
+  createContract() {
     throw new Error('need to be inherited')
   }
 }
